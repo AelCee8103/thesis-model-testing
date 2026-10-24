@@ -1,0 +1,76 @@
+# Keep image small. Anything matched here never enters Docker build context.
+
+# ---- Training-only embeddings (3.5 GB+) ----
+sgns.merge.word
+glove.840B.300d.txt
+*.bin
+*.vec
+
+# ---- Old / duplicate model folders (not in DATASET_REGISTRY) ----
+models/emobank-reader/
+models/standalone/
+
+# ---- Training-only cache (regenerated from CSVs; not needed at inference) ----
+cache/parsed_trees_*.pkl
+cache/*standalone*
+
+# ---- Raw training data ----
+datasets/
+CVAT.csv
+fb_dataset_cleaned.csv
+stanford_sentiment_assembled.csv
+writer_10240.csv
+reader_10240.csv
+
+# ---- Training-only scripts ----
+generate_cache.py
+scripts/
+
+# ---- Local Python venvs ----
+env/
+.venv/
+venv/
+.Python
+
+# ---- Python bytecode ----
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ---- Local env files (Render dashboard manages env vars) ----
+.env
+.env.*
+!.env.example
+
+# ---- Docs / notes ----
+*.md
+docs/
+README*
+
+# ---- VCS / editor / OS ----
+.git/
+.gitignore
+.github/
+.vscode/
+.idea/
+.DS_Store
+
+# ---- Test artefacts ----
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- Build artefacts ----
+dist/
+build/
+*.egg-info/
+logs/
+node_modules/
+
+# ---- Docker meta ----
+Dockerfile.old
+docker-compose*.yml
+.dockerignore

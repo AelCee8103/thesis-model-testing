@@ -1,0 +1,64 @@
+# ============================================================
+# Root .gitignore — keeps the 10GB+ of local-only files out of git.
+# NOTE: files already committed are NOT removed by this file. To stop
+# tracking an already-committed path without deleting it from disk:
+#   git rm -r --cached <path>
+# ============================================================
+
+# --- Python virtual environments (multi-GB, never commit) ---
+.venv/
+backend/.venv/
+env/
+backend/env/
+venv/
+__pycache__/
+*.pyc
+.python-version
+
+# --- Node ---
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+*.log
+
+# --- Env files (commit .env.example instead) ---
+.env
+**/.env
+!**/.env.example
+
+# --- Word embeddings (training-only, multi-GB, download separately) ---
+sgns.merge.word
+glove.840B.300d.txt
+*.vec
+*.bin
+
+# --- Duplicate raw model dump (the app serves backend/models/, not this) ---
+MODEL/
+
+# --- Corrupted / legacy checkpoints (not served by the API) ---
+*.corrupted
+backend/models/emobank-reader/
+backend/models/standalone/
+
+# --- backend/cache/ is kept in the repo on purpose ---
+# parsed_trees_*.pkl + label_stats_*.pkl + vocab_*.pkl are all committed so the
+# model never has to re-parse the corpora (saves 15-25 min per dataset). 53MB total.
+
+# --- Raw training datasets (training-only) ---
+backend/datasets/
+backend/CVAT.csv
+backend/fb_dataset_cleaned.csv
+backend/stanford_sentiment_assembled.csv
+backend/reader_10240.csv
+backend/writer_10240.csv
+
+# --- Benchmark run outputs ---
+backend/results/
+
+# --- OS / editor junk ---
+.DS_Store
+*.suo
+.idea/
+.vscode/*
+!.vscode/extensions.json

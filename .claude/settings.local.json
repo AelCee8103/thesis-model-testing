@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wsl --status)",
+      "Bash(wsl --list --verbose)",
+      "Bash(curl -s -X POST http://localhost:8000/predict -H \"Content-Type: application/json\" -d \"{\\\\\"text\\\\\":\\\\\"I feel very happy today\\\\\",\\\\\"dataset\\\\\":\\\\\"emobank_writer\\\\\",\\\\\"dimension\\\\\":\\\\\"valence\\\\\",\\\\\"architecture\\\\\":\\\\\"bilstm\\\\\",\\\\\"run_tag\\\\\":\\\\\"paper\\\\\"}\")",
+      "mcp__plugin_context-mode_context-mode__ctx_batch_execute",
+      "Bash(mkdir -p paper/valence paper/arousal)",
+      "Bash(mv regional_cnn_lstm/cvat_val_rcnn_lstm.keras paper/valence/lstm.keras)",
+      "Bash(mv regional_cnn_bilstm/cvat_val_rcnn_bilstm.keras paper/valence/bilstm.keras)",
+      "Bash(mv regional_cnn_lstm/cvat_aro_rcnn_lstm.keras paper/arousal/lstm.keras)",
+      "Bash(mv regional_cnn_bilstm/cvat_aro_rcnn_bilstm.keras paper/arousal/bilstm.keras)"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+# Render Blueprint — deploys backend as a Docker web service.
+# This file MUST live at the repo root so Render auto-discovers it.
+# Connect repo in Render dashboard → "Blueprints" → point at this repo.
+# Reference: https://render.com/docs/blueprint-spec
+#
+# Cache / no-retrain: the image bakes in models/ + cache/vocab_*.pkl (see
+# backend/Dockerfile). The service only LOADS these at runtime; it never trains
+# and never re-parses the training corpora. parsed_trees_*.pkl are training-only
+# and intentionally excluded from the image (backend/.dockerignore).
+#
+# WARNING — RAM: the `free` plan gives 512 MB, which is not enough for
+# TensorFlow + Stanza (torch). Expect out-of-memory on the first /predict.
+# Use `standard` (2 GB) or higher for a working deploy. Change `plan` below.
+services:
+  - type: web
+    name: tsr-backend
+    runtime: docker
+    plan: free          # change to `standard` (2 GB) — free 512 MB will OOM on TensorFlow
+    region: oregon
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: BASE_DIR
+        value: /app
+      - key: CUDA_VISIBLE_DEVICES
+        value: "-1"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: TF_CPP_MIN_LOG_LEVEL
+        value: "3"
+      - key: OMP_NUM_THREADS
+        value: "1"
